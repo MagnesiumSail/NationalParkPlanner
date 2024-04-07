@@ -8,7 +8,7 @@
   "host": "nationalparkplanner-dqvk.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -190,5 +190,5 @@
       }
     }
   },
-  "scheme": "http"
+  "scheme": "https"
 }

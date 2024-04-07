@@ -1,4 +1,6 @@
 //all routes will go through here, then split out into their own personal endpoints.
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('../swagger-output.json')
 const express = require('express');
 const router = express.Router();
 
@@ -16,13 +18,7 @@ router.use('/destinations', require('./destinationRoute.js'));
 router.use('/plannedtrips', require('./plannedTripsRoute.js'));
 router.use('/supplies', require('./suppliesRoute.js'));
 
-
-
-//error handling
-router.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //export router
 module.exports = router;
