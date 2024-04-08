@@ -52,4 +52,40 @@ async function retrieveDestinationById(req, res) {
     }
 }
 
-module.exports = { retrieveAllDestinations, retrieveDestinationById };
+const addDestination = async (req, res) => {
+    try {
+        const db = getDb();
+        if (!db) {
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+       
+        const destination = {
+            name: req.body.name,
+            state: req.body.state,
+            location: req.body.location,
+            description: req.body.description,
+            coordinates: req.body.coordinates,
+            establishedDate: req.body.establishedDate,
+            area: req.body.area,
+            activities: req.body.activities,
+            imageUrl: req.body.imageUrl
+        };
+
+        const destinationsCollection = db.collection('Destination');
+        const response = await destinationsCollection.insertOne(destination);
+
+        if (response.acknowledged) {
+            res.status(201).json({ id: response.insertedId });
+        } else {
+            res.status(500).json({ error: 'Some error occurred while creating the destination.' });
+        }
+    } catch (error) {
+        console.error('Error adding destination:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+
+
+module.exports = { retrieveAllDestinations, retrieveDestinationById, addDestination };
