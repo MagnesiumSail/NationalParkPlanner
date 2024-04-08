@@ -9,10 +9,10 @@ router.get('/', accountController.retrieveAllAccounts);
 // POST route to create a new account
 router.post('/', accountController.createUserAccount);
 
-// POST route to create a new account
+// PUT route to update an account
 router.put('/:id', accountController.updateAccount);
 
-// POST route to create a new account
+// DELETE route to delete an account
 router.delete('/:id', accountController.deleteAccount);
 
 module.exports = router;
