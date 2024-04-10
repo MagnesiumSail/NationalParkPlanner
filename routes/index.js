@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 });
 
 //All routes
+
 router.use('/accounts', require('./accountsRoute.js'));
 router.use('/destinations', require('./destinationRoute.js'));
 router.use('/plannedtrips', require('./plannedTripsRoute.js'));
