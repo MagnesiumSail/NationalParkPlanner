@@ -10,4 +10,6 @@ router.get('/', PlannedTripsController.retrieveAllPlannedTrips);
 router.get('/:id', PlannedTripsController.retrievePlannedTripsById);
 //post request to add a new planned trip:
 router.post('/', PlannedTripsController.addPlannedTrip);
+// put request to edit an existing planned trip:
+router.put('/:id', PlannedTripsController.updatePlannedTrip);
 module.exports = router;
