@@ -12,4 +12,9 @@ router.get('/:id', PlannedTripsController.retrievePlannedTripsById);
 router.post('/', PlannedTripsController.addPlannedTrip);
 // put request to edit an existing planned trip:
 router.put('/:id', PlannedTripsController.updatePlannedTrip);
+// delete request to remove a planned trip by id:
+router.delete('/:id', PlannedTripsController.deletePlannedTrip)
+
+
+
 module.exports = router;

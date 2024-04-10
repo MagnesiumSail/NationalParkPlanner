@@ -120,6 +120,31 @@ const updatePlannedTrip = async (req, res) => {
     }
 };
 
+const deletePlannedTrip = async (req, res) => {
+    try {
+        const db = getDb();
+        if (!db) {
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        const plannedTripsId = req.params.id;
+        if (!ObjectId.isValid(plannedTripsId)) {
+            return res.status(400).json({ error: 'Invalid planned trip ID' });
+        }
+
+        const plannedTripsCollection = db.collection('PlannedTrips');
+        const response = await plannedTripsCollection.deleteOne({ _id: new ObjectId(plannedTripsId) });
+
+        if (response.deletedCount > 0) {
+            res.status(200).json({ message: 'Destination deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'Planned trip not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting the planned trip:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
 
 
 
@@ -127,4 +152,6 @@ const updatePlannedTrip = async (req, res) => {
 
 
 
-module.exports = { retrieveAllPlannedTrips, retrievePlannedTripsById, addPlannedTrip, updatePlannedTrip};
+
+
+module.exports = { retrieveAllPlannedTrips, retrievePlannedTripsById, addPlannedTrip, updatePlannedTrip, deletePlannedTrip};
