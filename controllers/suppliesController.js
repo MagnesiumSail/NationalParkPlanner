@@ -158,4 +158,38 @@ async function deleteSupplies(req, res) {
     }
 }
 
-module.exports = { retrieveAllSupplies, createSupplies, updateSupplies, deleteSupplies};
+//get supplies by ID
+async function getSuppliesById(req, res) {
+    try {
+        const db = getDb();
+        if (!db) {
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        const SuppliesCollection = db.collection('Supplies');
+
+        // Extract Supplies ID from the request parameters
+        const SuppliesId = req.params.id;
+
+        // Check if the Supplies ID is valid
+        if (!ObjectId.isValid(SuppliesId)) {
+            return res.status(400).json({ error: 'Invalid Supplies ID' });
+        }
+
+        // Find the Supplies in the database
+        const Supplies = await SuppliesCollection.findOne({ _id: new ObjectId(SuppliesId) });
+
+        // Check if the Supplies was found
+        if (!Supplies) {
+            return res.status(404).json({ error: 'Supplies not found' });
+        }
+
+        // Return the Supplies
+        res.json(Supplies);
+    } catch (error) {
+        console.error('Error retrieving Supplies:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+module.exports = { retrieveAllSupplies, createSupplies, updateSupplies, deleteSupplies, getSuppliesById};
